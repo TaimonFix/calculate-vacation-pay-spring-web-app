@@ -1,4 +1,4 @@
-package com.neoflex.calculateVacationPay.Entities;
+package com.neoflex.calculateVacationPay.entities;
 
 public class VacationPaySimple extends VacationPay {
 

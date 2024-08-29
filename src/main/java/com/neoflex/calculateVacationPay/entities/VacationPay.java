@@ -1,4 +1,4 @@
-package com.neoflex.calculateVacationPay.Entities;
+package com.neoflex.calculateVacationPay.entities;
 
 public abstract class VacationPay {
     private final double averageSalary;

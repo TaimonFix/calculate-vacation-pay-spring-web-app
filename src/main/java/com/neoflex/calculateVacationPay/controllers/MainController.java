@@ -1,7 +1,9 @@
-package com.neoflex.calculateVacationPay.Controllers;
+package com.neoflex.calculateVacationPay.controllers;
 
-import com.neoflex.calculateVacationPay.Entities.VacationPayDateRange;
-import com.neoflex.calculateVacationPay.Entities.VacationPaySimple;
+import com.neoflex.calculateVacationPay.entities.VacationPay;
+import com.neoflex.calculateVacationPay.entities.VacationPayDateRange;
+import com.neoflex.calculateVacationPay.entities.VacationPaySimple;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,13 @@ import java.time.LocalDate;
 @Controller
 public class MainController {
 
+
+    private VacationPay vacationPay;
+
+    @Autowired
+    public void setVacationPay(VacationPay vacationPay) {
+        this.vacationPay = vacationPay;
+    }
 
     @GetMapping("/index")
     public String homePage() {

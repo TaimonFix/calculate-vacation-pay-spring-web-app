@@ -1,4 +1,4 @@
-package com.neoflex.calculateVacationPay.Entities;
+package com.neoflex.calculateVacationPay.entities;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

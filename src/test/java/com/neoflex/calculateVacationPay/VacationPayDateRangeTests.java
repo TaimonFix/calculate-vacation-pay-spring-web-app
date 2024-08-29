@@ -1,6 +1,6 @@
 package com.neoflex.calculateVacationPay;
 
-import com.neoflex.calculateVacationPay.Entities.VacationPayDateRange;
+import com.neoflex.calculateVacationPay.entities.VacationPayDateRange;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

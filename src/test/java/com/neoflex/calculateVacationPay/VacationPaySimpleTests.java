@@ -1,6 +1,6 @@
 package com.neoflex.calculateVacationPay;
 
-import com.neoflex.calculateVacationPay.Entities.VacationPaySimple;
+import com.neoflex.calculateVacationPay.entities.VacationPaySimple;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
