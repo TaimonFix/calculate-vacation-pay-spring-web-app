@@ -9,11 +9,7 @@ public class VacationPaySimple extends VacationPay {
         this.vacationCount = vacationCount;
     }
 
-    @Override
-    public double calculateVacationPay() {
-        double averageDailySalary = averageDailySalary(getAverageSalary());
-
-        return Math.floor(averageDailySalary * vacationCount * 100) / 100;
+    public int getVacationCount() {
+        return vacationCount;
     }
-
 }

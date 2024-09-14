@@ -11,9 +11,7 @@ public abstract class VacationPay {
         return averageSalary;
     }
 
-    protected double averageDailySalary(double averageSalary) {
+    public double averageDailySalary(double averageSalary) {
         return averageSalary / 29.4;
     }
-
-    protected abstract double calculateVacationPay();
 }

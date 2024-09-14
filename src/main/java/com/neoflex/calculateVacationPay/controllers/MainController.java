@@ -3,6 +3,8 @@ package com.neoflex.calculateVacationPay.controllers;
 import com.neoflex.calculateVacationPay.entities.VacationPay;
 import com.neoflex.calculateVacationPay.entities.VacationPayDateRange;
 import com.neoflex.calculateVacationPay.entities.VacationPaySimple;
+import com.neoflex.calculateVacationPay.services.VacationPayDateRangeService;
+import com.neoflex.calculateVacationPay.services.VacationPaySimpleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +16,17 @@ import java.time.LocalDate;
 @Controller
 public class MainController {
 
-
-    private VacationPay vacationPay;
+    private VacationPaySimpleService vacationPaySimpleService;
+    private VacationPayDateRangeService vacationPayDateRangeService;
 
     @Autowired
-    public void setVacationPay(VacationPay vacationPay) {
-        this.vacationPay = vacationPay;
+    public void setVacationPaySimpleService(VacationPaySimpleService vacationPaySimpleService) {
+        this.vacationPaySimpleService = vacationPaySimpleService;
+    }
+
+    @Autowired
+    public void setVacationPayDateRangeService(VacationPayDateRangeService vacationPayDateRangeService) {
+        this.vacationPayDateRangeService = vacationPayDateRangeService;
     }
 
     @GetMapping("/index")
@@ -29,11 +36,10 @@ public class MainController {
 
     @GetMapping("/calculate")
     public String calculateVacationPaySimple(@RequestParam double averageSalary, @RequestParam int vacationCount, Model model) {
-        VacationPaySimple vacationPaySimple = new VacationPaySimple(averageSalary, vacationCount);
-        model.addAttribute("vacationPay", vacationPaySimple.calculateVacationPay());
+        vacationPaySimpleService = new VacationPaySimpleService(new VacationPaySimple(averageSalary, vacationCount));
+        model.addAttribute("vacationPay", vacationPaySimpleService.calculateVacationPay());
         model.addAttribute("averageSalary", averageSalary);
         model.addAttribute("vacationCount", vacationCount);
-
 
         return "calculate-simple";
     }
@@ -42,7 +48,8 @@ public class MainController {
     public String calculateVacationPayDateRange(@RequestParam double averageSalary, @RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo,
                                                 Model model) {
         VacationPayDateRange vacationPayDateRange = new VacationPayDateRange(averageSalary, dateFrom, dateTo);
-        model.addAttribute("vacationPay", vacationPayDateRange.calculateVacationPay());
+        vacationPayDateRangeService = new VacationPayDateRangeService(vacationPayDateRange);
+        model.addAttribute("vacationPay", vacationPayDateRangeService.calculateVacationPay());
         model.addAttribute("averageSalary", averageSalary);
         model.addAttribute("dateFrom", vacationPayDateRange.getDateFrom());
         model.addAttribute("dateTo", vacationPayDateRange.getDateTo());
