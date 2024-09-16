@@ -17,7 +17,6 @@ public class VacationPayDateRangeService {
         public double calculateVacationPay() {
         double averageDailySalary = vacationPayDateRange.averageDailySalary(
                                     vacationPayDateRange.getAverageSalary());
-
         long vacationCount = vacationPayDateRange.getVacationCount();
 
         return Math.floor(averageDailySalary * vacationCount * 100) / 100 ;

@@ -9,6 +9,14 @@ public class VacationPayDateRange extends VacationPay {
     private LocalDate dateTo;
     private long vacationCount;
 
+    private final LocalDate[] arrayOfHolidays = {LocalDate.of(0, 1, 1), LocalDate.of(0, 1, 2),
+            LocalDate.of(0, 1, 3),      LocalDate.of(0, 1, 4),
+            LocalDate.of(0, 1, 5),      LocalDate.of(0, 1, 6),
+            LocalDate.of(0, 1, 7),      LocalDate.of(0, 1, 8),
+            LocalDate.of(0, 2, 23),     LocalDate.of(0, 3, 8),
+            LocalDate.of(0, 5, 1),      LocalDate.of(0, 5, 9),
+            LocalDate.of(0, 6, 12),     LocalDate.of(0, 11, 4)};
+
     public VacationPayDateRange(double averageSalary, LocalDate dateFrom, LocalDate dateTo) {
         super(averageSalary);
         this.dateFrom = dateFrom;
@@ -26,13 +34,6 @@ public class VacationPayDateRange extends VacationPay {
 
     public long getVacationCount() { return vacationCount; }
 
-    private final LocalDate[] arrayOfHolidays = {LocalDate.of(0, 1, 1), LocalDate.of(0, 1, 2),
-                                            LocalDate.of(0, 1, 3),      LocalDate.of(0, 1, 4),
-                                            LocalDate.of(0, 1, 5),      LocalDate.of(0, 1, 6),
-                                            LocalDate.of(0, 1, 7),      LocalDate.of(0, 1, 8),
-                                            LocalDate.of(0, 2, 23),     LocalDate.of(0, 3, 8),
-                                            LocalDate.of(0, 5, 1),      LocalDate.of(0, 5, 9),
-                                            LocalDate.of(0, 6, 12),     LocalDate.of(0, 11, 4)};
     private long calculateVacationCount() {
 
         vacationCount = ChronoUnit.DAYS.between(dateFrom,  dateTo);

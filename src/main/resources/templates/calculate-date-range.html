@@ -45,10 +45,11 @@
     </table>
 </form>
 
-<p>Средняя зарплата: <span th:text="${averageSalary}"></span></p>
-<p>Начало отпуска: <span th:text="${dateFrom}"></span></p>
-<p>Конец отпуска: <span th:text="${dateTo}"></span></p>
-<p>Отпускные: <span th:text="${vacationPay}"></span></p>
-
+<div th:if="${exception} == null">
+    <p>Средняя зарплата: <span th:text="${averageSalary}"></span></p>
+    <p>Начало отпуска: <span th:text="${dateFrom}"></span></p>
+    <p>Конец отпуска: <span th:text="${dateTo}"></span></p>
+    <p>Отпускные: <span th:text="${vacationPay}"></span></p>
+</div>
 </body>
 </html>
