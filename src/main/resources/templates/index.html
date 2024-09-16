@@ -16,11 +16,15 @@
 
 <!--<div>-->
 <!--    <select th:name="choice">-->
-<!--        <option th:value="zero" selected>-</option>-->
-<!--        <option th:value="first">Простой расчёт, по кол-ву дней</option>-->
-<!--        <option th:value="second">Расчёт по диапазону дат</option>-->
+<!--        <option th:value="0" selected>-</option>-->
+<!--        <option th:value="1">Простой расчёт, по кол-ву дней</option>-->
+<!--        <option th:value="2">Расчёт по диапазону дат</option>-->
 <!--    </select>-->
+
+<!--    <span th:if="${choice==1}">1</span>-->
+<!--    <span th:if="${choice==1}">2</span>-->
 <!--</div>-->
+
 
 <h3 align="center">Ниже вы сможете рассчитать отпускные двумя способами:</h3>
 <p align="center">1. Указав среднюю зарплату за 12 месяцев и количество дней отпуска</p>
@@ -41,7 +45,7 @@
 <p> Введите среднюю зарплату сотрудника за 12 месяцев, дни начала и окончания отпуска</p>
 <p style="color: red"> Обратите внимание: если день отпуска выпадает на праздничный день, то он учитываться не будет.</p>
 <p style="color: red">(По ТК РФ в России 14 праздничных дней: 1-8 января, 23 февраля, 8 марта, 1 мая, 9 мая, 12 июня, 4 ноября).</p>
-<form th:action="@{'/calculateRange'}" method="get">
+<form th:action="@{'/calculate/range'}" method="get">
     <table>
         <td> <input type="text" th:name="averageSalary" class="form-control" placeholder="средняя зарплата"></td>
         <td> <input type="date" th:name="dateFrom" class="form-control" ></td>

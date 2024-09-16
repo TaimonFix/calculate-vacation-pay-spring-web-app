@@ -1,17 +1,23 @@
 package com.neoflex.calculateVacationPay.controllers;
 
-import com.neoflex.calculateVacationPay.entities.VacationPay;
 import com.neoflex.calculateVacationPay.entities.VacationPayDateRange;
 import com.neoflex.calculateVacationPay.entities.VacationPaySimple;
+import com.neoflex.calculateVacationPay.exceptions.IllegalDateRangeException;
+import com.neoflex.calculateVacationPay.exceptions.MissingParameterException;
 import com.neoflex.calculateVacationPay.services.VacationPayDateRangeService;
 import com.neoflex.calculateVacationPay.services.VacationPaySimpleService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 
 @Controller
 public class MainController {
@@ -35,24 +41,56 @@ public class MainController {
     }
 
     @GetMapping("/calculate")
-    public String calculateVacationPaySimple(@RequestParam double averageSalary, @RequestParam int vacationCount, Model model) {
-        vacationPaySimpleService = new VacationPaySimpleService(new VacationPaySimple(averageSalary, vacationCount));
-        model.addAttribute("vacationPay", vacationPaySimpleService.calculateVacationPay());
-        model.addAttribute("averageSalary", averageSalary);
-        model.addAttribute("vacationCount", vacationCount);
-
+    public String calculateVacationPaySimple(@RequestParam(required = false) Double averageSalary,
+                                             @RequestParam(required = false) Integer vacationCount,
+                                             Model model) {
+        try {
+            if (averageSalary == null) {
+                throw new MissingParameterException("Введите среднюю зарплату.");
+            }
+            if (vacationCount == null) {
+                throw new MissingParameterException("Введите количество дней отпуска.");
+            }
+            vacationPaySimpleService = new VacationPaySimpleService(new VacationPaySimple(averageSalary, vacationCount));
+            model.addAttribute("vacationPay", vacationPaySimpleService.calculateVacationPay());
+            model.addAttribute("averageSalary", averageSalary);
+            model.addAttribute("vacationCount", vacationCount);
+        } catch (MissingParameterException e) {
+            System.out.println(e);
+            model.addAttribute("exception", e);
+        }
         return "calculate-simple";
     }
 
-    @GetMapping("/calculateRange")
-    public String calculateVacationPayDateRange(@RequestParam double averageSalary, @RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo,
+    @GetMapping("/calculate/range")
+    public String calculateVacationPayDateRange(@RequestParam(required = false) Double averageSalary,
+                                                @RequestParam(required = false) LocalDate dateFrom,
+                                                @RequestParam(required = false) LocalDate dateTo,
                                                 Model model) {
-        VacationPayDateRange vacationPayDateRange = new VacationPayDateRange(averageSalary, dateFrom, dateTo);
-        vacationPayDateRangeService = new VacationPayDateRangeService(vacationPayDateRange);
-        model.addAttribute("vacationPay", vacationPayDateRangeService.calculateVacationPay());
-        model.addAttribute("averageSalary", averageSalary);
-        model.addAttribute("dateFrom", vacationPayDateRange.getDateFrom());
-        model.addAttribute("dateTo", vacationPayDateRange.getDateTo());
+        try {
+            if (averageSalary == null) {
+                throw new MissingParameterException("Введите среднюю зарплату.");
+            }
+            if (dateFrom == null) {
+                throw new MissingParameterException("Введите дату начала отпуска.");
+            }
+            if (dateTo == null) {
+                throw new MissingParameterException("Введите дату окончания отпуска.");
+            }
+            if (dateFrom.isAfter(dateTo)) {
+                throw new IllegalDateRangeException("Начальная дата позже конечной.");
+            }
+
+            VacationPayDateRange vacationPayDateRange = new VacationPayDateRange(averageSalary, dateFrom, dateTo);
+            vacationPayDateRangeService = new VacationPayDateRangeService(vacationPayDateRange);
+            model.addAttribute("vacationPay", vacationPayDateRangeService.calculateVacationPay());
+            model.addAttribute("averageSalary", averageSalary);
+            model.addAttribute("dateFrom", vacationPayDateRange.getDateFrom());
+            model.addAttribute("dateTo", vacationPayDateRange.getDateTo());
+        } catch (IllegalDateRangeException | MissingParameterException e) {
+            System.out.println(e);
+            model.addAttribute("exception", e);
+        }
 
         return "calculate-date-range";
     }

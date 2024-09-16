@@ -40,13 +40,6 @@ public class VacationPayDateRange extends VacationPay {
         if (vacationCount == 0) {
             return 1;
         } else {
-        if (vacationCount < 0) {
-            LocalDate dateTMP;
-            dateTMP = dateFrom;
-            dateFrom = dateTo;
-            dateTo = dateTMP;
-            vacationCount = Math.abs(vacationCount) + 1;
-        }
 
         vacationCount++;
 

@@ -35,6 +35,9 @@
         <td> <input type="text" th:name="averageSalary" class="form-control" placeholder="средняя зарплата" > </td>
         <td> <input type="text" th:name="vacationCount" class="form-control" placeholder="кол-во дней отпуска"></td>
         <td> <button type="submit" class="btn btn-primary">Добавить</button></td>
+        <td><div style="color: red" th:if="${exception !=null}" th:else>
+            Ошибка: <span th:text="${exception.getMessage()}"></span>
+        </div></td>
     </table>
 </form>
 
@@ -42,7 +45,7 @@
 <p> Введите среднюю зарплату сотрудника за 12 месяцев, дни начала и окончания отпуска</p>
 <p style="color: red"> Обратите внимание: если день отпуска выпадает на праздничный день, то он учитываться не будет.</p>
 <p style="color: red">(По ТК РФ в России 14 праздничных дней: 1-8 января, 23 февраля, 8 марта, 1 мая, 9 мая, 12 июня, 4 ноября).</p>
-<form th:action="@{'/calculateRange'}" method="get">
+<form th:action="@{'/calculate/range'}" method="get">
     <table>
         <td> <input type="text" th:name="averageSalary" class="form-control" placeholder="средняя зарплата"></td>
         <td> <input type="date" th:name="dateFrom" class="form-control" ></td>
