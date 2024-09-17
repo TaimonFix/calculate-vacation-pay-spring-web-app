@@ -15,14 +15,6 @@
 <p align="center">2. Рассчитывается средняя дневная зарплата работника</p>
 <p align="center" >3. Рассчитываем отпускные: средняя дневная зарплата работника * количество дней отпуска</p>
 
-<!--<div>-->
-<!--    <select th:name="choice">-->
-<!--        <option th:value="zero" selected>-</option>-->
-<!--        <option th:value="first">Простой расчёт, по кол-ву дней</option>-->
-<!--        <option th:value="second">Расчёт по диапазону дат</option>-->
-<!--    </select>-->
-<!--</div>-->
-
 <h3 align="center">Ниже вы сможете рассчитать отпускные двумя способами:</h3>
 <p align="center">1. Указав среднюю зарплату за 12 месяцев и количество дней отпуска</p>
 <p align="center">2. Указав среднюю зарплату за 12 месяцев, дни начала и окончания отпуска</p>
@@ -41,6 +33,12 @@
     </table>
 </form>
 
+<div th:if="${exception} == null">
+    <p>Средняя зарплата: <span th:text="${averageSalary}"></span></p>
+    <p>Количество дней отпуска: <span th:text="${vacationCount}"></span></p>
+    <p>Отпускные: <span th:text="${vacationPay}"></span></p>
+</div>
+
 <h3>2. Расчёт отпускных при помощи дат начала и окончания отпуска</h3>
 <p> Введите среднюю зарплату сотрудника за 12 месяцев, дни начала и окончания отпуска</p>
 <p style="color: red"> Обратите внимание: если день отпуска выпадает на праздничный день, то он учитываться не будет.</p>
@@ -54,10 +52,5 @@
     </table>
 </form>
 
-<div th:if="${exception} == null">
-    <p>Средняя зарплата: <span th:text="${averageSalary}"></span></p>
-    <p>Количество дней отпуска: <span th:text="${vacationCount}"></span></p>
-    <p>Отпускные: <span th:text="${vacationPay}"></span></p>
-</div>
 </body>
 </html>
